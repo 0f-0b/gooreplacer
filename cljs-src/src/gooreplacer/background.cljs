@@ -34,7 +34,7 @@
                   (let [{:keys [res-headers-enabled? online-enabled? global-enabled?]} (read-goo-conf)]
                     (when global-enabled?
                       (if-let [online-resp (when online-enabled?
-                                             (tool/url-match (aget req "url") (filter #(= (:purpose %) "responseHeaders") (read-online-rules))))]
+                                             (tool/headers-match "responseHeaders" (.-url req) (.-responseHeaders req) (filter #(= (:purpose %) "responseHeaders") (read-online-rules))))]
                         online-resp
                         (when res-headers-enabled?
                           (tool/headers-match "responseHeaders" (.-url req) (.-responseHeaders req) (read-response-headers)))))))
@@ -45,7 +45,7 @@
                   (let [{:keys [req-headers-enabled? global-enabled? online-enabled?]} (read-goo-conf)]
                     (when global-enabled?
                       (if-let [online-resp (when online-enabled?
-                                             (tool/url-match (aget req "url") (filter #(= (:purpose %) "requestHeaders") (read-online-rules))))]
+                                             (tool/headers-match "requestHeaders" (.-url req) (.-requestHeaders req) (filter #(= (:purpose %) "requestHeaders") (read-online-rules))))]
                         online-resp
                         (when req-headers-enabled?
                           (tool/headers-match "requestHeaders" (.-url req) (.-requestHeaders req) (read-request-headers)))))))

@@ -2,9 +2,9 @@
 
 cd "$(cd `dirname $0`;pwd)"
 
-set -x
+set -ex
 
-rm resources/release/ui/option.js \
+rm -f resources/release/ui/option.js \
    resources/release/ui/popup.js \
    resources/release/background/main.js
 
